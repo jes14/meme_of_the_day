@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Web3 from "web3";
-import "./App.css";
 import Meme from "../abis/Meme.json";
 import MemeComponent from "./Meme";
 const ipfsClient = require("ipfs-http-client");
