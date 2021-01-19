@@ -72,7 +72,6 @@ class App extends Component {
     reader.readAsArrayBuffer(file);
     reader.onloadend = () => {
       this.setState({ buffer: Buffer(reader.result) });
-      console.log("buffer", this.state.buffer);
     };
   };
 
@@ -80,7 +79,6 @@ class App extends Component {
     event.preventDefault();
     console.log("Submitting file to ipfs...");
     ipfs.add(this.state.buffer, (error, result) => {
-      console.log("Ipfs result", result);
       if (error) {
         console.error(error);
         return;

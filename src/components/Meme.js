@@ -9,6 +9,7 @@ const Meme = (props) => {
           <img
             src={`https://ipfs.infura.io/ipfs/${props.memeHash}`}
             alt="memeHash"
+            className="img"
           />
         )}
         <h2>Change Meme</h2>
