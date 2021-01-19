@@ -38,3 +38,7 @@ npm start
 ```sh
 truffle test
 ```
+
+## App screen
+
+![Screenshot](memeOfTheDay.png)
