@@ -6,11 +6,12 @@
 
 - User can upload picture or meme in decentralized storage
 - This app is forked from https://github.com/dappuniversity/meme_of_the_day
+- You can check the changes in dev branch
 
 ## Updates/new features
 
 - Update UI
-- Update testing
+- Update testing(chai)
 - Seperate component
 - Refactoring
 
@@ -32,3 +33,7 @@ truffle migrate
 npm install
 npm start
 ```
+
+## How to test
+
+truffle test
