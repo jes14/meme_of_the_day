@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Web3 from "web3";
 import Meme from "../abis/Meme.json";
 import MemeComponent from "./Meme";
+import "./Meme.scss";
+
 const ipfsClient = require("ipfs-http-client");
 const ipfs = ipfsClient({
   host: "ipfs.infura.io",
@@ -31,17 +33,22 @@ class App extends Component {
   async loadBlockchainData() {
     const web3 = window.web3;
     // Load account
-    const accounts = await web3.eth.getAccounts();
-    this.setState({ account: accounts[0] });
-    const networkId = await web3.eth.net.getId();
-    const networkData = Meme.networks[networkId];
-    if (networkData) {
-      const contract = web3.eth.Contract(Meme.abi, networkData.address);
-      this.setState({ contract });
-      const memeHash = await contract.methods.get().call();
-      this.setState({ memeHash });
+    if (web3) {
+      const accounts = await web3.eth.getAccounts();
+      this.setState({ account: accounts[0] });
+      const networkId = await web3.eth.net.getId();
+      const networkData = Meme.networks[networkId];
+      if (networkData) {
+        const contract = web3.eth.Contract(Meme.abi, networkData.address);
+        this.setState({ contract });
+        const memeHash = await contract.methods.get().call();
+        this.setState({ memeHash });
+        this.setState({ isMetaMaskOn: true });
+      } else {
+        window.alert("Smart contract not deployed to detected network.");
+      }
     } else {
-      window.alert("Smart contract not deployed to detected network.");
+      this.setState({ isMetaMaskOn: false });
     }
   }
 
@@ -54,6 +61,7 @@ class App extends Component {
       web3: null,
       buffer: null,
       account: null,
+      isMetaMaskOn: false,
     };
   }
 
@@ -88,11 +96,19 @@ class App extends Component {
 
   render() {
     return (
-      <MemeComponent
-        memeHash={this.state.memeHash}
-        onSubmit={this.onSubmit}
-        captureFile={this.captureFile}
-      />
+      <div>
+        {this.state.isMetaMaskOn && (
+          <MemeComponent
+            memeHash={this.state.memeHash}
+            onSubmit={this.onSubmit}
+            captureFile={this.captureFile}
+          />
+        )}
+
+        {!this.state.isMetaMaskOn && (
+          <h2 className="container">Please connect the meta mask</h2>
+        )}
+      </div>
     );
   }
 }
